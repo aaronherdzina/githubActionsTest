@@ -60,12 +60,8 @@ jobs:
         with:
           name: dist-files
           path: ./dist
-      - name: Output contents
-        run: |
-          ls
-          echo "AWS_ACCESS_KEY ? ${{ secrets.AWS_ACCESS_KEY }}"
-          echo "AWS_SECRET_ACCESS_KEY? ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       - name: Deploy site
+        id: deploy
         uses: ./.github/actions/deploy-s3-javascript
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -73,3 +69,6 @@ jobs:
         with:
           bucket: gha-custom-hosting-aaron
           dist-folder: ./dist
+      - name: Output Information
+        run: |
+          echo "Live URL: ${{  steps.deploy.outputs.website-url  }}"

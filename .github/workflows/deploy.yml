@@ -61,7 +61,10 @@ jobs:
           name: dist-files
           path: ./dist
       - name: Output contents
-        run: ls
+        run: |
+          ls
+          echo "AWS_ACCESS_KEY ? ${{ secrets.AWS_ACCESS_KEY }}"
+          echo "AWS_SECRET_ACCESS_KEY? ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       - name: Deploy site
         uses: ./.github/actions/deploy-s3-javascript
         env:
